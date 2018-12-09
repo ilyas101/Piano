@@ -1,0 +1,11 @@
+.answered {
+    background: lightgreen;
+    font-weight: bold;
+}
+.notAnswered {
+    background: white;
+}
+.search {
+    margin: auto;
+    width: fit-content;
+}

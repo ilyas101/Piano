@@ -1,0 +1,97 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:text-align="http://www.w3.org/1999/xhtml">
+
+<!--/*@thymesVar id="query" type="java.lang.String"*/-->
+<!--/*@thymesVar id="error" type="java.lang.String"*/-->
+<!--/*@thymesVar id="items" type="ru.karimov.piano.model.Items"*/-->
+
+<head>
+    <title>Test for Piano</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <link rel="stylesheet" th:href="@{css/main.css}" href="css/main.css"/>
+</head>
+
+<body>
+<div>
+    <form id="searchForm" action="/" method="post">
+        <div class="search">
+            <input th:value="${query}" id="query" name="query" type="text" placeholder="Search"/>
+            <div class="search">
+                <button type="submit" name="submit">
+                    Search
+                </button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div th:if="${error != null}">
+    <div>
+        <div th:text="${error}">Unknown Error</div>
+    </div>
+</div>
+
+<div th:if="${items != null and items.items != null and page > 0}">
+    <div>
+        <table border="1" name="resTable">
+            <thead>
+            <tr>
+                <th width="12%">UserPhoto</th>
+                <th width="3%">User</th>
+                <th width="40%">Title</th>
+                <th width="10%">Created</th>
+                <th width="20%">Tags</th>
+                <th width="10%">Answered</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:if=" ${items != null}" th:each="question : ${items.items}"
+                th:classappend="${question.answered} ? answered : notAnswered">
+                <td>
+                    <div>
+                        <img th:src="${question.owner.profileImage != null ? question.owner.profileImage : 'img/no_image.jpg'}"
+                             src="img/no_image.png"/>
+                    </div>
+                </td>
+                <td>
+                    <div>
+                        <a th:href="${question.owner.link}" th:text="${question.owner.displayName}"></a>
+                    </div>
+                </td>
+                <td>
+                    <h3><a th:href="${question.link}" th:text="${question.title}"></a></h3>
+                    <ul>
+                        <li>
+                            Score: <span th:text="${question.score}">-</span>
+                        </li>
+                        <li>
+                            View count: <span th:text="${question.viewCount}">-</span>
+                        </li>
+                        <li>
+                            Answer count: <span th:text="${question.answerCount}">-</span>
+                        </li>
+                    </ul>
+                </td>
+                <td>
+                    <p th:text="${#dates.format(question.creationDate, 'yyyy/MM/dd HH:mm:ss')}"></p>
+                </td>
+                <td>
+                    <span th:each="tag : ${question.tags}">
+                        <span th:text="${tag}"></span>
+                    </span>
+                </td>
+                <td>
+                    <span th:text="${question.answered} ? 'answered' : 'not answered'"></span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <ul th:if="${page > 1 or items.hasMore}" class="pager">
+            <li th:if="${page > 1}"><a id="prevBtn" th:href="@{/{id}(id=${page-1})}">Previous</a></li>
+            <li th:if="${items.hasMore}"><a id="nextBtn" th:href="@{/{id}(id=${page+1})}">Next</a></li>
+        </ul>
+    </div>
+</div>
+</body>
+</html>
