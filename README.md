@@ -1,5 +1,5 @@
 
-# Test project for piano
+# Test project for Piano
 
 Startup:
 1. mvn clean compile spring-boot:run
