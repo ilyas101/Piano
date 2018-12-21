@@ -1,5 +1,5 @@
 
-# Test project for Piano
+# Application  for finding question using Stack Exchange API 
 
 Startup:
 1. mvn clean compile spring-boot:run
