@@ -21,16 +21,12 @@ import java.io.IOException;
 public class MainController {
     private static final Logger LOGGER = LoggerFactory.getLogger(MainController.class);
 
+    @Autowired
     private StackExchangeService service;
 
-    private int page;
+    private int page = 1;
 
     private String query;
-
-    @Autowired
-    public void setService(StackExchangeService service) {
-        this.service = service;
-    }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String result(ModelMap model) {
@@ -44,7 +40,7 @@ public class MainController {
             return "index";
         }
 
-        if (this.page == 0) {
+        if (this.page != 0) {
             this.page = 1;
         }
         this.query = query;

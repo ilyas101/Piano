@@ -34,6 +34,12 @@ public class PianoApplicationTest {
     }
 
     @Test
+    public void testJavaPage() throws Exception {
+        this.mockMvc.perform(get("/")).andDo(print()).andExpect(status().isOk())
+                .andExpect(content().string(containsString("Search")));
+    }
+
+    @Test
     public void testSearchQuestions() throws Exception {
         this.mockMvc.perform(post("/")
                 .param("query", "java"))

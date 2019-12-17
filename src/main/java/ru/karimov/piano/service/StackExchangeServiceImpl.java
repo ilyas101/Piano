@@ -31,7 +31,7 @@ public class StackExchangeServiceImpl implements StackExchangeService {
     public Items search(int page, String query) throws IOException {
         String link = String.format(searchLink, page, query);
         LOGGER.debug("API link: " + link);
-        String data = new String();
+        String data = "";
 
         try {
             data = loadData(link);
@@ -46,10 +46,10 @@ public class StackExchangeServiceImpl implements StackExchangeService {
         return mapper.readValue(data, Items.class);
     }
 
-    private String loadData(String link) throws ClientProtocolException, IOException {
+    private String loadData(String link) throws IOException {
 
         CloseableHttpClient httpClient = HttpClients.createDefault();
-        String responseText = new String();
+        String responseText = "";
         HttpGet httpGet = new HttpGet(link);
         HttpResponse httpResponse = httpClient.execute(httpGet);
         HttpEntity httpEntity = httpResponse.getEntity();
